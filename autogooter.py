@@ -54,7 +54,7 @@ class Application(tk.Frame):
 
         self.en4 = tk.Entry(width=10)
         self.en4.place(x=100,y=200)
-        self.en4.insert(tk.END,50)
+        self.en4.insert(tk.END,300)
 
         #self.thread2 = threading.Thread(target=self.autoiine)
         self.iinestart = tk.Button(self.master,text="イイネStart!",width=20,command=self.autoiine)
@@ -77,7 +77,7 @@ class Application(tk.Frame):
 
         self.en6 = tk.Entry(width=10)
         self.en6.place(x=100,y=370)
-        self.en6.insert(tk.END,60)
+        self.en6.insert(tk.END,300)
 
         self.label8 = tk.Label(text='イイネ数 : ')
         self.label8.place(x=20,y=400)
@@ -152,11 +152,10 @@ class Application(tk.Frame):
         print(self.files)
 
         for url in self.files:
+            print(url)
             self.driver.get(url)
 
             self.driver.find_element_by_class_name('o-timelineHome__moreButton').click()
-
-            time.sleep(int(self.en6.get()))
             #for i in range(1,int(int(self.en4.get())/10)):
                 #self.driver.execute_script("window.scrollTo(0, {})".format(i*3000))
                 #time.sleep(2+randint(0,2))
@@ -168,6 +167,8 @@ class Application(tk.Frame):
                 
                 except IndexError:
                     break
+            
+            time.sleep(int(self.en6.get()))
             
         messagebox.showinfo("一括イイネ終了","イイネが終了しました。")
 
