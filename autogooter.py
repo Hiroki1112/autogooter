@@ -39,9 +39,9 @@ class Application(tk.Frame):
         self.en2.place(x=100,y=80)
         self.en2.insert(tk.END,self.password)
 
-        thread1 = threading.Thread(target=self.login)
+        #self.thread1 = threading.Thread(target=self.login)
 
-        self.login = tk.Button(self.master,text="LOGIN",width=20,command=thread1.start)
+        self.login = tk.Button(self.master,text="LOGIN",width=20,command=self.login)
         self.login.place(x=130, y=120)
 
         self.label3 = tk.Label(text='抽出対象URL : ')
@@ -55,12 +55,13 @@ class Application(tk.Frame):
 
         self.en4 = tk.Entry(width=10)
         self.en4.place(x=100,y=200)
-        self.en4.insert(tk.END,30)
+        self.en4.insert(tk.END,50) 
 
-        thread2 = threading.Thread(target=self.autoiine)
+        #self.thread2 = threading.Thread(target=self.autoiine)
 
-        self.iinestart = tk.Button(self.master,text="イイネStart!",width=20,command=thread2.start)
+        self.iinestart = tk.Button(self.master,text="イイネStart!",width=20,command=self.autoiine)
         self.iinestart.place(x=130, y=240)
+
 
     def resource_path(self,relative):
         if hasattr(sys, "_MEIPASS"):
@@ -91,9 +92,9 @@ class Application(tk.Frame):
 
         #targetClasses = self.driver.find_element_by_class_name('o-like')
         time.sleep(2)
-        #for i in range(1,int(int(self.en4.get())/10)):
-            #self.driver.execute_script("window.scrollTo(0, {})".format(i*3000))
-            #time.sleep(2+randint(0,2))
+        for i in range(1,int(int(self.en4.get())/10)):
+            self.driver.execute_script("window.scrollTo(0, {})".format(i*3500))
+            time.sleep(2+randint(0,2))
 
         for i in range(int(self.en4.get())):
             self.driver.find_elements_by_class_name('o-like')[i].click()
