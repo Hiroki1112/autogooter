@@ -1,4 +1,4 @@
-import time,sys,os
+import time,sys,os,signal
 from selenium import webdriver
 import tkinter as tk
 from functools import partial
@@ -10,8 +10,10 @@ class Application(tk.Frame):
     
     def __init__(self,master):
         super().__init__(master)
-        self.pack()
 
+        self.iinecount = 0
+
+        self.pack()
         self.master.geometry("420x500")
         self.master.title("Note 自動イイネ！")
 
@@ -20,6 +22,9 @@ class Application(tk.Frame):
 
         self.id,self.password = str(self.tmp).split(',')
         self.create_widgets()
+        
+        #プログラムを起動してからイイネした数をカウントする
+        
 
 
     # Create Widgets function
@@ -51,6 +56,9 @@ class Application(tk.Frame):
 
         self.label4 = tk.Label(text='イイネ数 : ')
         self.label4.place(x=20,y=200)
+
+        self.label9 = tk.Label(text='今日のイイネ数 : {}'.format(self.iinecount))
+        self.label9.place(x=170,y=200)
 
         self.en4 = tk.Entry(width=10)
         self.en4.place(x=100,y=200)
@@ -127,14 +135,19 @@ class Application(tk.Frame):
         #for i in range(1,int(int(self.en4.get())/10)):
             #self.driver.execute_script("window.scrollTo(0, {})".format(i*3000))
             #time.sleep(2+randint(0,2))
+        flag = True 
 
         for i in range(int(self.en4.get())):
             try:
                 self.driver.find_elements_by_class_name('o-like')[i].click()
                 time.sleep(2+randint(0,4))
+                self.iinecount += 1
+                self.label9["text"] = str(self.iinecount)
             
             except IndexError:
+                messagebox.showinfo("IndexError:","{}件イイネしました.".format(i))
                 break
+                    
         
         messagebox.showinfo("イイネ終了","イイネが終了しました。")
     

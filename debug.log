@@ -18,3 +18,4 @@
 [0624/024428.305:ERROR:exception_snapshot_win.cc(98)] thread ID 22168 not found in process
 [0624/024428.329:ERROR:process_reader_win.cc(123)] NtOpenThread: {アクセス拒否} プロセスはオブジェクトのアクセスを要求しましたが、アクセス権が与えられていません。 (0xc0000022)
 [0624/024428.329:ERROR:exception_snapshot_win.cc(98)] thread ID 6768 not found in process
+[0704/203514.801:ERROR:prune_crash_reports.cc(35)] PruneCrashReportDatabase: Failed to get pending reports
