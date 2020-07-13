@@ -1,3 +1,3 @@
 # autogooder
 
-- 自動でnoteをイイネするプログラム。"autogooder"が正式名称です
+- 自動でnoteをイイネするプログラム。完成したらREADME書き上げます。

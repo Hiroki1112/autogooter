@@ -5,6 +5,7 @@ from functools import partial
 from random import randint
 from tkinter import messagebox,filedialog
 import threading
+import requests
 
 class Application(tk.Frame):
     
@@ -62,15 +63,16 @@ class Application(tk.Frame):
 
         self.en4 = tk.Entry(width=10)
         self.en4.place(x=100,y=200)
-        self.en4.insert(tk.END,300)
+        self.en4.insert(tk.END,150)
 
         #self.thread2 = threading.Thread(target=self.autoiine)
         self.iinestart = tk.Button(self.master,text="イイネStart!",width=20,command=self.autoiine)
         self.iinestart.place(x=130, y=240)
 
+        """
         self.label5 = tk.Label(text='ファイル選択 ')
         self.label5.place(x=20,y=300)
-
+        
         self.selectButton = tk.Button(self.master,text="ファイルを選択する",width=12,command=self.select_file)
         self.selectButton.place(x=130, y=300)
 
@@ -96,6 +98,47 @@ class Application(tk.Frame):
 
         self.lumpstart = tk.Button(self.master,text="一括イイネstart",width=20,command=self.ikkatsuIIne)
         self.lumpstart.place(x=130, y=440)
+        """
+        self.label7 = tk.Label(text='検索ワード : ')
+        self.label7.place(x=20,y=300)
+
+        self.en6 = tk.Entry(width=10)
+        self.en6.place(x=100,y=300)
+
+        self.label8 = tk.Label(text='イイネ数 : ')
+        self.label8.place(x=20,y=330)
+
+        self.en7 = tk.Entry(width=10)
+        self.en7.place(x=100,y=330)
+        self.en7.insert(tk.END,150)
+
+        self.lumpstart = tk.Button(self.master,text="検索イイネstart",width=20,command=self.search_iine)
+        self.lumpstart.place(x=130, y=360)
+    
+    def search_iine(self):
+        target = self.en6.get()
+        self.driver.get("https://note.com/search?context=note&mode=search&q="+ target)
+
+        time.sleep(2)
+
+        for i in range(int(self.en4.get())):
+            try:
+                self.driver.find_elements_by_class_name('o-like')[i].click()
+                time.sleep(2+randint(0,4))
+                self.iinecount += 1
+                
+            
+            except IndexError:
+                messagebox.showinfo("IndexError:","{}件イイネしました.".format(i))
+                break
+
+            except KeyboardInterrupt:
+                messagebox.showinfo("IndexError:","{}件イイネしました.".format(i))
+                break
+                    
+        self.label9["text"] = '今日のイイネ数 : {}'.format(self.iinecount)
+        messagebox.showinfo("イイネ終了","イイネが終了しました。")
+
 
     def select_file(self):
         fTyp = [("","*")]
@@ -135,20 +178,23 @@ class Application(tk.Frame):
         #for i in range(1,int(int(self.en4.get())/10)):
             #self.driver.execute_script("window.scrollTo(0, {})".format(i*3000))
             #time.sleep(2+randint(0,2))
-        flag = True 
 
         for i in range(int(self.en4.get())):
             try:
                 self.driver.find_elements_by_class_name('o-like')[i].click()
                 time.sleep(2+randint(0,4))
                 self.iinecount += 1
-                self.label9["text"] = str(self.iinecount)
+                
             
             except IndexError:
                 messagebox.showinfo("IndexError:","{}件イイネしました.".format(i))
                 break
+
+            except KeyboardInterrupt:
+                messagebox.showinfo("IndexError:","{}件イイネしました.".format(i))
+                break
                     
-        
+        self.label9["text"] = '今日のイイネ数 : {}'.format(self.iinecount)
         messagebox.showinfo("イイネ終了","イイネが終了しました。")
     
     def ikkatsuIIne(self):
